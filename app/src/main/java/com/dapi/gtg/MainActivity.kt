@@ -4,15 +4,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity()  {
 
     lateinit var ImageView: ImageView
     lateinit var ImageView1: ImageView
+    lateinit var textView3 : TextView
+    lateinit var textView4 : TextView
+
+    lateinit var random: Random
     lateinit var button: Button
 
-    val kartuImg = intArrayOf(
+    var skorkiri = 0
+    var skorkanan = 0
+
+    var kartuImg = intArrayOf(
         R.drawable.img1,
         R.drawable.img2,
         R.drawable.img3,
@@ -32,21 +40,31 @@ class MainActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        random = Random
+
         ImageView = findViewById(R.id.ImageView);
         ImageView1 = findViewById(R.id.ImageView1);
+        textView3 = findViewById(R.id.textView3);
+        textView4 = findViewById(R.id.textView4);
         button = findViewById(R.id.button);
 
         button.setOnClickListener{
-            val random = Random
-            ImageView.setImageResource(kartuImg[random.nextInt(kartuImg.size)])
-            ImageView1.setImageResource(kartuImg[random.nextInt(kartuImg.size)])
-        }
-        val ImageView=0;
-        if (ImageView ==0){
-            print("$ImageView+1")
-        }else{
-            print("$ImageView+1")
-        }
+            val kartukiri = random.nextInt(kartuImg.size)
+            val kartukanan = random.nextInt(kartuImg.size)
 
+            setCardImage(kartukiri, ImageView)
+            setCardImage(kartukanan, ImageView1)
+
+            if (kartukiri > kartukanan) {
+                skorkiri++
+                textView3.text = "$skorkiri"
+            } else if (kartukanan > kartukiri)
+                skorkanan++
+            textView4.text = "$skorkanan"
+        }
     }
+    private fun setCardImage(number: Int, image: ImageView) {
+        image.setImageResource(kartuImg[number])
+    }
+
 }
